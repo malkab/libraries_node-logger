@@ -1,0 +1,63 @@
+{
+  "name": "@malkab/node-logger",
+  "version": "1.0.0",
+  "description": "A convenient wrapper around Winston",
+  "scope": "@malkab",
+  "author": {
+    "name": "Juan Pedro Perez Alcantara",
+    "email": "jp.perez.alcantara@gmail.com",
+    "url": "http://me.com"
+  },
+  "main": "dist/main.js",
+  "types": "dist/lib/index.d.ts",
+  "keywords": [
+    "log",
+    "logging"
+  ],
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/owner/project#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/malkab/code-samples.git"
+  },
+  "private": false,
+  "scripts": {
+    "clean": "rm -Rf build ; rm -Rf dist",
+    "quick-test": "npm-run-all --parallel service:watch:quick-test:server service:build",
+    "start": "npm-run-all --parallel service:watch:mocha:server service:build",
+    "build": "npm run clean ; npm run service:build-lib",
+    "build-with-docs": "npm run clean ; npm run service:build-lib ; npm run build-docs ; cp -R typedoc/build/html dist/docs",
+    "build-docs": "cd typedoc ; ./html ; cd ..",
+    "service:build-lib": "webpack --config webpack-production.config.js --progress --colors",
+    "service:build": "webpack --progress --colors",
+    "service:watch:quick-test:server": "nodemon --inspect=0.0.0.0:9329 \"./build/quicktest.js\" --watch \"./build/quicktest.js\"",
+    "service:watch:mocha:server": "nodemon --ext js --watch ./build/ --exec 'mocha --timeout 20000 ./build/mocha.js || true'"
+  },
+  "engines": {
+    "node": "~10.16.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.10",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.15.7",
+    "@types/winston": "^2.4.4",
+    "chai": "^4.2.0",
+    "clean-webpack-plugin": "^2.0.1",
+    "mocha": "^6.2.2",
+    "nodemon": "^1.19.4",
+    "npm-run-all": "^4.1.5",
+    "terser": "^3.17.0",
+    "terser-webpack-plugin": "^1.4.3",
+    "ts-loader": "^5.3.3",
+    "tslint": "^5.20.1",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-filter-warnings-plugin": "^1.2.1",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "winston": "^3.3.3"
+  }
+}

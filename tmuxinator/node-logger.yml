@@ -1,0 +1,8 @@
+name: node-logger
+root: /home/git/malkab-libraries-node/node-logger
+
+windows:
+  - docker: >
+      cd docker ;
+      sleep 0.2 ;
+      clear
