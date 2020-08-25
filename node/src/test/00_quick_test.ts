@@ -14,9 +14,12 @@ import { NodeLogger, ELOGLEVELS } from "../lib/index";
 
 const nl: NodeLogger = new NodeLogger({
   logFilePath: "/ext_src/",
-  logLevelDevelopment: ELOGLEVELS.DEBUG,
-  logLevelProduction: ELOGLEVELS.ERROR,
-  nodeEnvironment: "development"
+  appName: "the_app",
+  consoleOut: true,
+  datePattern: "YYYY_MM_DD_HH_mm",
+  maxFiles: 3,
+  maxSize: "10k",
+  minLogLevel: ELOGLEVELS.INFO
 });
 
 const i: any = setInterval(() => {

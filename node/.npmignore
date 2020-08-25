@@ -11,3 +11,4 @@ tslint.json
 webpack*
 *.tgz
 scripts
+README_boilerplate.md

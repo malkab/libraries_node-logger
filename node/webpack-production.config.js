@@ -1,10 +1,10 @@
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require("webpack-node-externals");
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-  
+
   entry: './src/lib/index.ts',
 
   mode: "production",
@@ -33,7 +33,7 @@ module.exports = {
 
         path.join(__dirname, '/node_modules/'),
         path.join(__dirname, "/src/test/")
-  
+
       ]
     }]
   },

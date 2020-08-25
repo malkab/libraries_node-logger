@@ -20,13 +20,17 @@ Follow:
 
 Steps:
 
-- test **npm run build**;
+- update package **README.md** and the description at **package.json**, if applicable;
 
-- close the Git Flow feature and go back to **develop**;
+- test **npm run build**;
 
 - test **npm pack**;
 
-- test **npm publish**, changing version at **package.json** and **package-lock.json** if needed;
+- test **npm publish**;
+
+- changing version with **npm version** if needed;
+
+- close the Git Flow feature and go back to **develop**, if any;
 
 - if applicable, create a new Git Flow Release;
 

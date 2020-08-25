@@ -4,6 +4,8 @@ import * as path from "path";
 
 import * as lodash from "lodash";
 
+require("winston-daily-rotate-file");
+
 /**
  *
  * Levels for logging.
@@ -25,149 +27,130 @@ export class NodeLogger {
 
   /**
    *
-   * NODE_ENV
-   *
-   */
-  private _nodeEnv: string;
-
-  /**
-   *
    * The Winston logger.
    *
    */
   private _log: winston.Logger;
 
   /**
-    *
-    * Defaults for Winston.
-    *
-    */
-  private _winstonCsvFormat: any;
-  private _winstonTxtFormat: any;
-  private _winstonConsoleFormat: any;
-
-  /**
    *
-   * Transports.
+   * This class will produce a standard log file and an additional, non-rotating
+   * file with errors called "errors".
    *
-   */
-  private _winstonTransports: any[];
-
-  /**
-   *
-   * Constructor.
-   *
-   * @param __namedParameters     ApiRouter options.
-   * @param logFilePath           **Optional**. A Log object for automatically
-   *                              log HTTP responses via the
-   *                              @HttpServer.processResponse handler.
-   * @param logLevelDevelopment   The minimum level to log at development level.
-   *                              Defaults to ELOGLEVELS.DEBUG.
-   * @param logLevelProduction    The minimum level to log at production level.
-   *                              Defaults to ELOGLEVELS.INFO.
-   * @param nodeEnvironment       The NODE environment, either "production" or
-   *                              "development". Defaults to "production".
+   * @param __namedParameters       ApiRouter options.
+   * @param logFilePath             **Optional**, defaults to **\/logs**, sets
+   *                                the path to store log files.
+   * @param minLogLevel             **Optional**, defaults to
+   *                                **ELOGLEVELS.INFO**, suitable for production
+   *                                environments. Sets the minimum level to log.
+   * @param consoleOut              **Optional**, defaults to **false**. Enables
+   *                                console output.
+   * @param appName                 **Optional**, defaults to **node**. The
+   *                                prefix of the log files.
+   * @param maxSize                 **Optional**, defaults to **500m**. The max
+   *                                size to rotate the log file if it become too
+   *                                large before rotation by time.
+   * @param datePattern             **Optional**, defaults to **YYYY_MM_DD_HH**.
+   *                                This determines the time pattern to rotate
+   *                                the log file. For example,
+   *                                'YYYY_MM_DD_HH_mm' will rotate it every
+   *                                minute. This date is also added to the file
+   *                                name.
+   * @param maxFiles                **Optional**, defaults to null. This
+   *                                determines the max number of files to keep.
    *
    */
   constructor({
     logFilePath = "/logs",
-    logLevelDevelopment = ELOGLEVELS.DEBUG,
-    logLevelProduction = ELOGLEVELS.INFO,
-    nodeEnvironment = "production"
+    minLogLevel = ELOGLEVELS.INFO,
+    consoleOut = false,
+    appName = "node",
+    maxSize = "500m",
+    datePattern = "YYYY_MM_DD_HH",
+    maxFiles = null
   }: {
     logFilePath?: string;
-    logLevelDevelopment?: ELOGLEVELS;
-    logLevelProduction?: ELOGLEVELS;
-    nodeEnvironment?: string;
+    minLogLevel?: ELOGLEVELS;
+    consoleOut?: boolean;
+    appName?: string;
+    maxSize?: string;
+    datePattern?: string;
+    maxFiles?: number;
   }) {
 
     // This is a hack to access the items of ELOGLEVELS with a
     // string as an index
     const ELOGLEVELSI: { [idx: string]: ELOGLEVELS; } = <any>ELOGLEVELS;
 
-    // Set NODE_ENV
-    this._nodeEnv = nodeEnvironment !== "development" ?
-      "production" : "development";
-
     // Set formats
     const { combine, timestamp, printf, metadata } = winston.format;
 
-    // CSV, for production
+    // CSV format
     const winstonCsvFormatDef = printf(
       ({ level, timestamp, message, metadata }) => {
         return `'${timestamp}','${level}','${metadata.moduleRouter}','${metadata.methodRouter}','${message}','${JSON.stringify(metadata.payload)}'`;
       }
     );
 
-    this._winstonCsvFormat = combine(
+    const winstonCsvFormat: any = combine(
       timestamp(),
       winstonCsvFormatDef
     );
 
-    // Console, for development
-    const winstonConsoleFormatDef = printf(
-      ({ level, timestamp, message, metadata }) => {
-        return `${timestamp} ${lodash.padEnd(level, 5)} > ${metadata.moduleRouter} ${metadata.methodRouter} ${message} ${metadata.payload ? JSON.stringify(metadata.payload) : ""}`;
-      }
+    // For console, in case it is asked for
+    let winstonConsoleFormatDef: any;
+    let winstonConsoleFormat: any;
+
+    if (consoleOut) {
+
+      winstonConsoleFormatDef = printf(
+        ({ level, timestamp, message, metadata }) => {
+          return `${timestamp} ${lodash.padEnd(level, 5)} > ${metadata.moduleRouter} ${metadata.methodRouter} ${message} ${metadata.payload ? JSON.stringify(metadata.payload) : ""}`;
+        }
+      );
+
+      winstonConsoleFormat = combine(
+        timestamp(),
+        winstonConsoleFormatDef
+      );
+
+    }
+
+    // Set transports
+    const winstonTransports: any[] = [];
+
+    // Errors
+    winstonTransports.push(
+      new winston.transports.File({
+        filename: path.join(logFilePath, "error.csv"),
+        level: ELOGLEVELS.ERROR
+      })
     );
 
-    this._winstonConsoleFormat = combine(
-      timestamp(),
-      winstonConsoleFormatDef
-    );
-
-    // Set transports, depends on NODE_ENV
-    this._winstonTransports = [];
-
-    if (this._nodeEnv === "production") {
-
-      // Production mode
-
-      // Default complete log
-      this._winstonTransports.push(
-        new winston.transports.File({
-          filename: path.join(logFilePath, "log.csv"),
-          level: logLevelProduction
-        })
-      );
-
-      // Errors
-      this._winstonTransports.push(
-        new winston.transports.File({
-          filename: path.join(logFilePath, "error.csv"),
-          level: ELOGLEVELS.ERROR
-        })
-      );
-
-    } else {
-
-      // Development mode
-
-      // Default complete log
-      this._winstonTransports.push(
-        new winston.transports.File({
-          filename: path.join(logFilePath, "log.csv"),
-          level: logLevelDevelopment
-        })
-      );
-
-      // Errors
-      this._winstonTransports.push(
-        new winston.transports.File({
-          filename: path.join(logFilePath, "error.csv"),
-          level: ELOGLEVELS.ERROR
-        })
-      );
+    // Add console transport, if activated
+    if (consoleOut) {
 
       // Add an additional console log
-      this._winstonTransports.push(
+      winstonTransports.push(
         new winston.transports.Console({
-          format: this._winstonConsoleFormat,
-          level: (<any>ELOGLEVELS)[logLevelDevelopment]
+          format: winstonConsoleFormat,
+          level: minLogLevel
         })
       );
 
     }
+
+    // The rotator
+    winstonTransports.push(
+      new (<any>winston.transports).DailyRotateFile({
+        filename: `${appName}_%DATE%.csv`,
+        dirname: logFilePath,
+        maxFiles: maxFiles,
+        datePattern: datePattern,
+        maxSize: maxSize,
+        level: minLogLevel
+      })
+    )
 
     /**
      *
@@ -177,8 +160,8 @@ export class NodeLogger {
      */
     this._log = winston.createLogger({
 
-      format: this._winstonCsvFormat,
-      transports: this._winstonTransports
+      format: winstonCsvFormat,
+      transports: winstonTransports
 
     });
 
