@@ -1,0 +1,14 @@
+dist/test
+node_modules
+build
+src
+typedoc
+.editorconfig
+.jshintrc
+README-package-json.md
+tsconfig.json
+tslint.json
+webpack*
+*.tgz
+scripts
+README_boilerplate.md
