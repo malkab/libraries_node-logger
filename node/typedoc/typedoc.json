@@ -1,10 +1,9 @@
 {
 
     "inputFiles": [
-        "../src/lib"
+        "../src/"
     ],
-
-    "name": "XXX",
+    "name": "node-logger",
     "inlineSourceMap": true,
     "includeDeclarations": true,
     "ignoreCompilerErrors": true,

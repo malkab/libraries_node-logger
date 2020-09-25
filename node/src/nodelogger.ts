@@ -2,7 +2,7 @@ import * as winston from "winston";
 
 import * as path from "path";
 
-import * as lodash from "lodash";
+import lodash from "lodash";
 
 require("winston-daily-rotate-file");
 
@@ -67,7 +67,7 @@ export class NodeLogger {
     appName = "node",
     maxSize = "500m",
     datePattern = "YYYY_MM_DD_HH",
-    maxFiles = null
+    maxFiles
   }: {
     logFilePath?: string;
     minLogLevel?: ELOGLEVELS;

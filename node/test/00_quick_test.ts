@@ -10,7 +10,7 @@ Quick Test
 
 `);
 
-import { NodeLogger, ELOGLEVELS } from "../lib/index";
+import { NodeLogger, ELOGLEVELS } from "../src/index";
 
 const nl: NodeLogger = new NodeLogger({
   logFilePath: "/ext_src/",
@@ -52,6 +52,6 @@ const i: any = setInterval(() => {
       payload: { a: 0, b: 1 }
     })
 
-  }, 500
+  }, 5000
 
 );

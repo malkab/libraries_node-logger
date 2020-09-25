@@ -3,6 +3,7 @@ root: /home/git/malkab-libraries-node/node-logger
 
 windows:
   - docker: >
-      cd docker ;
+      clear ;
       sleep 0.2 ;
-      clear
+      cd docker ;
+      ./docker_node_run.sh

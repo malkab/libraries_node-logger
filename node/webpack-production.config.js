@@ -5,7 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
 
-  entry: './src/lib/index.ts',
+  entry: "./src/index.ts",
 
   mode: "production",
   target: "node",
@@ -16,11 +16,10 @@ module.exports = {
   ],
 
   output: {
-
-    filename: '[name].js',
+    filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
-    libraryTarget: "commonjs"
-
+    libraryTarget: "umd",
+    library: "rxjs"
   },
 
   externals: [nodeExternals()],
