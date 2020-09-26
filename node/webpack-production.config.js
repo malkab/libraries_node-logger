@@ -19,7 +19,7 @@ module.exports = {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: "umd",
-    library: "rxjs"
+    library: "node-logger"
   },
 
   externals: [nodeExternals()],
