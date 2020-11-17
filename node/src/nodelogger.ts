@@ -184,7 +184,8 @@ export class NodeLogger {
    * **Optional**. An optional payload. Don't be too verbose!!!
    *
    * @param consolePayload
-   * **Optional**. An optional payload for the console output.
+   * **Optional**. An optional payload for the console output. Equals payload if
+   * not present.
    *
    * @param message
    * A message describing the error.
@@ -203,6 +204,9 @@ export class NodeLogger {
       consolePayload?: any;
       message: string;
   }): void {
+
+    // If payload and not consolePayload, make them the same
+    if (payload) consolePayload = consolePayload ? consolePayload : payload;
 
     this._log.debug(message, { metadata: {
       moduleRouter: moduleName,
@@ -231,7 +235,8 @@ export class NodeLogger {
    * **Optional**. An optional payload. Don't be too verbose!!!
    *
    * @param consolePayload
-   * **Optional**. An optional payload for the console output.
+   * **Optional**. An optional payload for the console output. Equals payload if
+   * not present.
    *
    * @param message
    * A message describing the error.
@@ -250,6 +255,9 @@ export class NodeLogger {
       consolePayload?: any;
       message: string;
   }): void {
+
+    // If payload and not consolePayload, make them the same
+    if (payload) consolePayload = consolePayload ? consolePayload : payload;
 
     this._log.warn(message, { metadata: {
       moduleRouter: moduleName,
@@ -278,7 +286,8 @@ export class NodeLogger {
    * **Optional**. An optional payload. Don't be too verbose!!!
    *
    * @param consolePayload
-   * **Optional**. An optional payload for the console output.
+   * **Optional**. An optional payload for the console output. Equals payload if
+   * not present.
    *
    * @param message
    * A message describing the error.
@@ -297,6 +306,9 @@ export class NodeLogger {
       consolePayload?: any;
       message: string;
   }): void {
+
+    // If payload and not consolePayload, make them the same
+    if (payload) consolePayload = consolePayload ? consolePayload : payload;
 
     this._log.info(message, { metadata: {
       moduleRouter: moduleName,
@@ -325,7 +337,8 @@ export class NodeLogger {
    * **Optional**. An optional payload. Don't be too verbose!!!
    *
    * @param consolePayload
-   * **Optional**. An optional payload for the console output.
+   * **Optional**. An optional payload for the console output. Equals payload if
+   * not present.
    *
    * @param message
    * A message describing the error.
@@ -344,6 +357,9 @@ export class NodeLogger {
       consolePayload?: any;
       message: string;
   }): void {
+
+    // If payload and not consolePayload, make them the same
+    if (payload) consolePayload = consolePayload ? consolePayload : payload;
 
     this._log.error(message, { metadata: {
       moduleRouter: moduleName,
