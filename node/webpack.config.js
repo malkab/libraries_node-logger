@@ -1,5 +1,7 @@
-const path = require('path');
-const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
+// Doc version: 2020-10-11
+
+const path = require("path");
+const FilterWarningsPlugin = require("webpack-filter-warnings-plugin");
 
 module.exports = {
   entry: {
@@ -9,19 +11,20 @@ module.exports = {
   },
   mode: "development",
   watch: true,
-  target: "node",
-  devtool: 'inline-source-map',
-  devServer: {
-    contentBase: './build'
-  },
   watchOptions: {
     poll: true,
+    aggregateTimeout: 300,
     ignored: /node_modules/
+  },
+  target: "node",
+  devtool: "inline-source-map",
+  devServer: {
+    contentBase: "./build"
   },
 
   output: {
     path: path.resolve(__dirname),
-    filename: './build/[name].js'
+    filename: "./build/[name].js"
   },
 
   module: {
@@ -30,7 +33,7 @@ module.exports = {
         test: /\.tsx?$/,
         use: [
           {
-            loader: 'ts-loader',
+            loader: "ts-loader",
             options: {
               transpileOnly: true,
               experimentalWatchApi: true
@@ -47,7 +50,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+    extensions: [ ".tsx", ".ts", ".js" ]
   },
 
   plugins: [

@@ -1,10 +1,11 @@
-const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// Doc version: 2020-10-11
+
+const path = require("path");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const nodeExternals = require("webpack-node-externals");
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-
   entry: "./src/index.ts",
 
   mode: "production",
@@ -16,10 +17,10 @@ module.exports = {
   ],
 
   output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "index.js",
+    path: path.resolve(__dirname, "dist"),
     libraryTarget: "umd",
-    library: "node-logger"
+    library: "LibraryNameToMakePublic"
   },
 
   externals: [nodeExternals()],
@@ -27,10 +28,10 @@ module.exports = {
   module: {
     rules: [{
       test: /\.tsx?$/,
-      use: 'ts-loader',
+      use: "ts-loader",
       exclude: [
 
-        path.join(__dirname, '/node_modules/'),
+        path.join(__dirname, "/node_modules/"),
         path.join(__dirname, "/src/test/")
 
       ]
@@ -60,7 +61,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: [".tsx", ".ts", ".js"]
   }
 
 };

@@ -105,7 +105,7 @@ export class NodeLogger {
 
       winstonConsoleFormatDef = printf(
         ({ level, timestamp, message, metadata }) => {
-          return `${timestamp} ${lodash.padEnd(level, 5)} > ${metadata.moduleRouter} ${metadata.methodRouter} ${message} ${metadata.payload ? JSON.stringify(metadata.payload) : ""}`;
+          return `${timestamp} ${lodash.padEnd(level, 5)} > ${metadata.moduleRouter} ${metadata.methodRouter} ${message} ${metadata.consolePayload ? JSON.stringify(metadata.consolePayload) : ""}`;
         }
       );
 
@@ -171,89 +171,130 @@ export class NodeLogger {
    *
    * A handy method for debug messages.
    *
-   * @param __namedParameters     Logging options.
-   * @param moduleName            Module name the error was thrown in.
-   * @param methodName            Method name the error was thrown in.
-   * @param payload               **Optional**. An optional payload. Don't be
-   *                              too verbose!!!
-   * @param message               A message describing the error.
+   * @param __namedParameters
+   * Logging options.
+   *
+   * @param moduleName
+   * Module name the error was thrown in.
+   *
+   * @param methodName
+   * Method name the error was thrown in.
+   *
+   * @param payload
+   * **Optional**. An optional payload. Don't be too verbose!!!
+   *
+   * @param consolePayload
+   * **Optional**. An optional payload for the console output.
+   *
+   * @param message
+   * A message describing the error.
    *
    */
   public logDebug({
-    moduleName,
-    methodName,
-    payload = null,
-    message
-  }: {
-    moduleName: string;
-    methodName: string;
-    payload?: any;
-    message: string;
-}): void {
-
-  this._log.debug(message, { metadata: {
-    moduleRouter: moduleName,
-    methodRouter: methodName,
-    message: message,
-    payload: payload
-  }})
-
-}
-
-  /**
-   *
-   * A handy method for warn messages.
-   *
-   * @param __namedParameters     Logging options.
-   * @param moduleName            Module name the error was thrown in.
-   * @param methodName            Method name the error was thrown in.
-   * @param payload               **Optional**. An optional payload. Don't be
-   *                              too verbose!!!
-   * @param message               A message describing the error.
-   *
-   */
-  public logWarn({
-    moduleName,
-    methodName,
-    payload = null,
-    message
-  }: {
-    moduleName: string;
-    methodName: string;
-    payload?: any;
-    message: string;
-}): void {
-
-  this._log.warn(message, { metadata: {
-    moduleRouter: moduleName,
-    methodRouter: methodName,
-    message: message,
-    payload: payload
-  }})
-
-}
-
-  /**
-   *
-   * A handy method for info messages.
-   *
-   * @param __namedParameters     Logging options.
-   * @param moduleName            Module name the error was thrown in.
-   * @param methodName            Method name the error was thrown in.
-   * @param payload               **Optional**. An optional payload. Don't be
-   *                              too verbose!!!
-   * @param message               A message describing the error.
-   *
-   */
-  public logInfo({
       moduleName,
       methodName,
-      payload = null,
+      payload = undefined,
+      consolePayload = undefined,
       message
     }: {
       moduleName: string;
       methodName: string;
       payload?: any;
+      consolePayload?: any;
+      message: string;
+  }): void {
+
+    this._log.debug(message, { metadata: {
+      moduleRouter: moduleName,
+      methodRouter: methodName,
+      message: message,
+      payload: payload,
+      consolePayload: consolePayload
+    }})
+
+  }
+
+  /**
+   *
+   * A handy method for warn messages.
+   *
+   * @param __namedParameters
+   * Logging options.
+   *
+   * @param moduleName
+   * Module name the error was thrown in.
+   *
+   * @param methodName
+   * Method name the error was thrown in.
+   *
+   * @param payload
+   * **Optional**. An optional payload. Don't be too verbose!!!
+   *
+   * @param consolePayload
+   * **Optional**. An optional payload for the console output.
+   *
+   * @param message
+   * A message describing the error.
+   *
+   */
+  public logWarn({
+      moduleName,
+      methodName,
+      payload = undefined,
+      consolePayload = undefined,
+      message
+    }: {
+      moduleName: string;
+      methodName: string;
+      payload?: any;
+      consolePayload?: any;
+      message: string;
+  }): void {
+
+    this._log.warn(message, { metadata: {
+      moduleRouter: moduleName,
+      methodRouter: methodName,
+      message: message,
+      payload: payload,
+      consolePayload: consolePayload
+    }})
+
+  }
+
+  /**
+   *
+   * A handy method for warn messages.
+   *
+   * @param __namedParameters
+   * Logging options.
+   *
+   * @param moduleName
+   * Module name the error was thrown in.
+   *
+   * @param methodName
+   * Method name the error was thrown in.
+   *
+   * @param payload
+   * **Optional**. An optional payload. Don't be too verbose!!!
+   *
+   * @param consolePayload
+   * **Optional**. An optional payload for the console output.
+   *
+   * @param message
+   * A message describing the error.
+   *
+   */
+  public logInfo({
+      moduleName,
+      methodName,
+      payload = undefined,
+      consolePayload = undefined,
+      message
+    }: {
+      moduleName: string;
+      methodName: string;
+      payload?: any;
+      consolePayload?: any;
       message: string;
   }): void {
 
@@ -261,7 +302,8 @@ export class NodeLogger {
       moduleRouter: moduleName,
       methodRouter: methodName,
       message: message,
-      payload: payload
+      payload: payload,
+      consolePayload: consolePayload
     }})
 
   }
@@ -270,33 +312,47 @@ export class NodeLogger {
    *
    * A handy method for error messages.
    *
-   * @param __namedParameters     Logging options.
-   * @param moduleName            Module name the error was thrown in.
-   * @param methodName            Method name the error was thrown in.
-   * @param payload               **Optional**. An optional payload. Don't be
-   *                              too verbose!!!
-   * @param message               A message describing the error.
+   * @param __namedParameters
+   * Logging options.
+   *
+   * @param moduleName
+   * Module name the error was thrown in.
+   *
+   * @param methodName
+   * Method name the error was thrown in.
+   *
+   * @param payload
+   * **Optional**. An optional payload. Don't be too verbose!!!
+   *
+   * @param consolePayload
+   * **Optional**. An optional payload for the console output.
+   *
+   * @param message
+   * A message describing the error.
    *
    */
   public logError({
-    moduleName,
-    methodName,
-    payload = null,
-    message
-  }: {
-    moduleName: string;
-    methodName: string;
-    payload?: any;
-    message: string;
-}): void {
+      moduleName,
+      methodName,
+      payload = undefined,
+      consolePayload = undefined,
+      message
+    }: {
+      moduleName: string;
+      methodName: string;
+      payload?: any;
+      consolePayload?: any;
+      message: string;
+  }): void {
 
-  this._log.error(message, { metadata: {
-    moduleRouter: moduleName,
-    methodRouter: methodName,
-    message: message,
-    payload: payload
-  }})
+    this._log.error(message, { metadata: {
+      moduleRouter: moduleName,
+      methodRouter: methodName,
+      message: message,
+      payload: payload,
+      consolePayload: consolePayload
+    }})
 
-}
+  }
 
 }
