@@ -1,15 +1,18 @@
 // Doc version: 2020-10-11
 
+// Webpack 5
+
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const nodeExternals = require("webpack-node-externals");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.ts",
 
+  entry: "./src/index.ts",
   mode: "production",
   target: "node",
+
   plugins: [
 
     new CleanWebpackPlugin()
@@ -20,9 +23,11 @@ module.exports = {
     filename: "index.js",
     path: path.resolve(__dirname, "dist"),
     libraryTarget: "umd",
-    library: "LibraryNameToMakePublic"
+    library: "node-logger"
   },
 
+  // This does not bundle the global node_modules, resulting in a much smaller
+  // file, but less portable.
   externals: [nodeExternals()],
 
   module: {
@@ -44,7 +49,6 @@ module.exports = {
     minimizer: [new TerserPlugin({
       parallel: true,
       terserOptions: {
-        extractComments: true,
         mangle: {
           toplevel: true
         },
@@ -54,10 +58,6 @@ module.exports = {
       }
     })]
 
-  },
-
-  node: {
-    fs: "empty"
   },
 
   resolve: {

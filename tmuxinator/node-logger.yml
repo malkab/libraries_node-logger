@@ -1,9 +1,8 @@
 name: node-logger
-root: /home/git/malkab-libraries-node/node-logger
+root: /home/git/libraries_node/libraries_node-logger
 
 windows:
   - docker: >
       clear ;
       sleep 0.2 ;
-      cd docker ;
-      ./docker_node_run.sh
+      cd docker
