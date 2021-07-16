@@ -54,12 +54,7 @@ VOLATILE=true
 # 8080 is typically assigned at container-level to an Express app entrypoint.
 # Angular applications traditionally export port 4200. Incompatible with
 # NETWORK=container:XXX.
-PORTS=(
-  8080:8080
-  9009:9229
-  9010:9329
-  4200:4200
-)
+PORTS=()
 # Custom entrypoint.
 ENTRYPOINT=/bin/bash
 # Custom workdir.
