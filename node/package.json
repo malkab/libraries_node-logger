@@ -22,7 +22,7 @@
   },
   "private": false,
   "scripts": {
-    "package-json-version": "echo 2020-10-22",
+    "package-json-version": "echo 2021-07-19",
     "clean": "rm -Rf build ; rm -Rf dist",
     "quick-test": "npm-run-all --parallel service:watch:quick-test:server service:build",
     "start": "npm-run-all --parallel service:watch:mocha:server service:build",

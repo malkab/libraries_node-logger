@@ -1,4 +1,4 @@
-// Doc version: 2020-10-11
+// Doc version: 2021-07-19
 
 // Webpack 5
 
@@ -37,7 +37,7 @@ module.exports = {
       exclude: [
 
         path.join(__dirname, "/node_modules/"),
-        path.join(__dirname, "/src/test/")
+        path.join(__dirname, "/test/")
 
       ]
     }]
@@ -64,4 +64,4 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"]
   }
 
-};
+}

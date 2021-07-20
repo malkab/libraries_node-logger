@@ -1,4 +1,6 @@
-// Doc version: 2020-10-11
+// Doc version: 2021-07-19
+
+// Webpack 5
 
 const path = require("path");
 
