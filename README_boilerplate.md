@@ -11,28 +11,28 @@ Follow:
 
 - initialise **Git** and **Git Flow**;
 
-- configure **package.json** and make initial install.
+- configure **package.json** and make initial install with **yarn install**.
 
 
 ## Publishing Workflow
 
 Steps:
 
-- update package **README.md** and the description at **package.json**, if applicable;
+- [] update package **README.md** and the description at **package.json**, if applicable;
 
-- test **npm run build** or **npm run build-with-docs** (better the last one, copy resulting docs to mlk-docs);
+- [] test **yarn build** or **yarn build-with-docs** (better the last one, copy resulting docs to mlk-docs);
 
-- test **npm pack**;
+- [] test **yarn pack**;
 
-- review changes with Git to get a clear idea of changes in the current version, but don't commit yet;
+- [] review changes with Git to get a clear idea of changes in the current version, but don't commit yet;
 
-- test **npm publish**, changing version with **npm version** if needed;
+- [] test **yarn publish-production**;
 
-- close the Git Flow feature and go back to **develop**, if any. Get a clear idea of changes in the current version;
+- [] close the Git Flow feature and go back to **develop**, if any. Get a clear idea of changes in the current version;
 
-- if applicable, create a new Git Flow Release;
+- [] if applicable, create a new Git Flow Release;
 
-- push all branches and tags to GitLab:
+- [] push all branches and tags to GitHub:
 
 ```Shell
 # This will push ALL branches to origin, even the non-existant ones. Remove sporious branches with git push origin :branch_name
@@ -42,4 +42,4 @@ git fetch -av --prune
 git branch -av
 ```
 
-- create a new Release at GitLab from the last **master**. Set **Tag name** and **Release title** to **vX.X.X**.
+- [] create a new Release at GitLab from the last **master**. Set **Tag name** and **Release title** to **vX.X.X**.
