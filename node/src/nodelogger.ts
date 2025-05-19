@@ -87,8 +87,8 @@ export class NodeLogger {
 
     // CSV format
     const winstonCsvFormatDef = printf(
-      ({ level, timestamp, message, metadata }) => {
-        return `'${timestamp}','${level}','${metadata.moduleRouter}','${metadata.methodRouter}','${message}','${JSON.stringify(metadata.payload)}'`;
+      ({ level, timestamp, message, metadata: any }) => {
+        return `'${timestamp}','${level}','${message}'`;
       }
     );
 
@@ -105,7 +105,7 @@ export class NodeLogger {
 
       winstonConsoleFormatDef = printf(
         ({ level, timestamp, message, metadata }) => {
-          return `${timestamp} ${lodash.padEnd(level, 5)} > ${metadata.moduleRouter} ${metadata.methodRouter} ${message} ${metadata.consolePayload ? JSON.stringify(metadata.consolePayload) : ""}`;
+          return `${timestamp} ${lodash.padEnd(level, 5)} > ${message}`;
         }
       );
 
