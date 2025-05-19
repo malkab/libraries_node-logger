@@ -1,8 +1,8 @@
 {
-  "name": "@malkab/node-logger",
-  "version": "1.1.8",
+  "name": "@sunntics/node-logger",
+  "version": "1.1.9",
   "description": "A convenience wrapper around Winston.",
-  "scope": "@malkab",
+  "scope": "@sunntics",
   "author": {
     "name": "Juan Pedro Perez Alcantara",
     "email": "jp.perez.alcantara@gmail.com",
